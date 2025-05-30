@@ -22,8 +22,11 @@ async def predict(file: UploadFile = File(...)):
     for box in results[0].boxes:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
         label = model.names[int(box.cls[0])]
+        # ⭐ เพิ่ม confidence ลงใน response ⭐
+        confidence = float(box.conf[0]) if hasattr(box, "conf") else None
         detections.append({
             "label": label,
+            "confidence": confidence,  # <--- เพิ่มตรงนี้
             "x": x1,
             "y": y1,
             "width": x2 - x1,
