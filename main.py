@@ -3,6 +3,18 @@ from fastapi.responses import JSONResponse
 from ultralytics import YOLO
 import numpy as np
 import cv2
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # หรือใส่ domain frontend ของคุณ เช่น "https://your-frontend.vercel.app"
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app = FastAPI()
 model = YOLO("model.pt")
